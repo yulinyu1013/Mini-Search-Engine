@@ -1,0 +1,198 @@
+Full name: Zhanpeng Wang, Jiacheng Xu, Siyun Hu, Xingfan Jia 
+SEAS login: zpwang, jiacxu, siyun, xingfan
+
+Description of all features implemented:
+
+Crawler: 
+Our crawler is designed to be both distributed and multithreaded with the functionality of 
+filtering out non-English pages and estimating the server location of a page. We adopte the Master-Worker 
+System with the distributed stormlite framework from HW3 assignment to implement our crawler.
+This crawler is distributed, Mercator-style, and multithreaded. It can be deployed and run on multiple
+machines at the same time. Each machine uses the SparkJava framework to communicate with each
+other.
+
+Indexer:
+The indexer uses the MapReduce Framework of Apache Hadoop to generate lemmarized, 
+inverted indexes of the crawled documents, which provides the search engine with fancy TF-IDF, 
+plain TF-IDF and the positions that each word appears in the fancy and plain text. 
+
+PageRank:
+PageRank uses Apache Spark MapReduce to approximate the relative importance of pages in the 
+Webgraph we crawler.
+
+SearchEngine:
+For search Engine and UI, the idea is that there is a load balancer that keeps tracking of 
+the available worker nodes. Whenever a new user query comes in, the request is redirected 
+to next available workers in round robin fashion. When a worker receives a request, it 
+would query the Indexer score table and PageRank score table in RDS and combine their 
+scores using ranking function and display the top 100 links based on final ranking score.
+
+
+Extra credit claimed:
+1.	Crawl additional features: Webpage’s server location, anchor text
+2.	Additional ranking features: anchor text, title, metadata, positions
+3.	Spark implementation for PageRank.
+4.	User query spell check by using language tool
+5.	Integrate search results from other web services: Wikipedia, Amazon, weatherwidget.io
+ 
+List of source files included:
+Crawler:
+src/main/
+├── java
+│   └── edu
+│       └── upenn
+│           ├── cis
+│           │   └── stormlite
+│           │       ├── bolt
+│           │       │   ├── BoltDeclarer.java
+│           │       │   ├── IRichBolt.java
+│           │       │   ├── MapBolt.java
+│           │       │   ├── OutputCollector.java
+│           │       │   └── ReduceBolt.java
+│           │       ├── Config.java
+│           │       ├── distributed
+│           │       │   ├── SenderBolt.java
+│           │       │   ├── StringIntPairDeserializer.java
+│           │       │   ├── StringIntPairKeyDeserializer.java
+│           │       │   ├── WorkerHelper.java
+│           │       │   └── WorkerJob.java
+│           │       ├── DistributedCluster.java
+│           │       ├── IOutputCollector.java
+│           │       ├── IStreamSource.java
+│           │       ├── LocalCluster.java
+│           │       ├── OutputFieldsDeclarer.java
+│           │       ├── ReducerDB.java
+│           │       ├── routers
+│           │       │   ├── FieldBased.java
+│           │       │   ├── First.java
+│           │       │   ├── RoundRobin.java
+│           │       │   └── StreamRouter.java
+│           │       ├── spout
+│           │       │   ├── FileSpout.java
+│           │       │   ├── IRichSpout.java
+│           │       │   └── SpoutOutputCollector.java
+│           │       ├── StringIntPair.java
+│           │       ├── tasks
+│           │       │   ├── BoltTask.java
+│           │       │   └── SpoutTask.java
+│           │       ├── TopologyBuilder.java
+│           │       ├── TopologyContext.java
+│           │       ├── Topology.java
+│           │       ├── tuple
+│           │       │   ├── Fields.java
+│           │       │   ├── Tuple.java
+│           │       │   └── Values.java
+│           │       └── ValueList.java
+│           └── cis455
+│               └── g09
+│                   ├── Context.java
+│                   ├── crawler
+│                   │   ├── CrawlerBolt.java
+│                   │   ├── CrawlerUtils.java
+│                   │   ├── DocParsingBolt.java
+│                   │   ├── HttpResponseParser.java
+│                   │   ├── info
+│                   │   │   ├── RobotsTxtInfo.java
+│                   │   │   └── URLInfo.java
+│                   │   ├── master
+│                   │   │   ├── CrawlerMasterApp.java
+│                   │   │   └── CrawlerWorkerStatus.java
+│                   │   ├── RobotsTxtNeededInfoPackage.java
+│                   │   ├── S3Uploader.java
+│                   │   ├── URLFiltersBolt.java
+│                   │   ├── URLFrontierQueue.java
+│                   │   ├── worker
+│                   │   │   ├── CrawlerWorkerMain.java
+│                   │   │   ├── CrawlerWorkerServer.java
+│                   │   │   └── URLPackage.java
+│                   │   └── XPathApp.java
+│                   ├── frontend
+│                   │   ├── Config.java
+│                   │   ├── DisplayItem.java
+│                   │   ├── FrontendWorker.java
+│                   │   ├── FrontTest.java
+│                   │   ├── Heartbeat.java
+│                   │   ├── IndexerInfo.java
+│                   │   ├── Indexer_query_bolt.java
+│                   │   ├── LB.java
+│                   │   ├── PageRank_filter_bolt.java
+│                   │   ├── PageRankInfo.java
+│                   │   ├── PeriodCounter.java
+│                   │   ├── PorterStemmer.java
+│                   │   ├── PositionList.java
+│                   │   ├── RDSHelper.java
+│                   │   ├── README
+│                   │   ├── SpellCheck.java
+│                   │   ├── TestRDSConnection.java
+│                   │   ├── utils.java
+│                   │   └── WorkerInfo.java
+│                   ├── indexer
+│                   │   ├── mapreduce
+│                   │   │   ├── IndexDriver.java
+│                   │   │   ├── IndexMapper.java
+│                   │   │   ├── IndexReducer.java
+│                   │   │   ├── MapOutputValue.java
+│                   │   │   ├── MultipleInputDriver.java
+│                   │   │   └── S3InputDriver.java
+│                   │   └── preprocess
+│                   │       ├── FileMain.java
+│                   │       ├── FileParser.java
+│                   │       ├── PorterStemmer.java
+│                   │       ├── StopWords.java
+│                   │       └── WordPreprocessor.java
+│                   ├── Job.java
+│                   ├── pagerank
+│                   │   ├── MergeContent.java
+│                   │   ├── PageRank.java
+│                   │   ├── RemoveLinks.java
+│                   │   └── S3Writer.java
+│                   └── storage
+│                       ├── CrawlerWorkerStateKey.java
+│                       ├── CrawlerWorkerStateVal.java
+│                       ├── DBWrapper.java
+│                       ├── DocKey.java
+│                       ├── DocVal.java
+│                       ├── UserKey.java
+│                       └── UserVal.java
+└── resources
+    ├── GeoLite2-City.mmdb
+    ├── log4j.properties
+    └── public
+        ├── css
+        │   ├── frontendWorker.css
+        │   └── loadBalancer.css
+        ├── images
+        │   ├── background.jpg
+        │   ├── loading.gif
+        │   ├── logo.jpg
+        │   └── main_page_logo.jpg
+        └── js
+            └── wikiPlugin.js
+
+Instructions on how to install and run the project:
+Before running any code, run "mvn clean install".
+
+Crawler:
+To run our crawler, you need to sign up an account in Maxmind(https://dev.maxmind.com/geoip/geoip2/geolite2/)
+to download GeoLite2 database (GeoLite2-City.mmdb) and put it under src/main/resources directory since our 
+crawler uses GeoIP Api from Maxmind to get the server location of a web page.
+Then you should run Crawler master by running "mvn exec:java@CrawlerMaster".
+You need to run Crawler worker by running "mvn exec:java@CrawlerWorker -Dexec.args='<Host machine IP>:<Host Number> <worker's database path> <worker's port number>'".
+For example, "mvn exec:java@CrawlerWorker -Dexec.args='127.0.0.1:8000 /home/cis455/worker1 8001'".
+
+PageRank: 
+mvn exec:java@PageRank -Dexec.args="crawler-file-directory".
+mvn exec:java@MergeContent -Dexec.args="score-file-directory crawler-file-directory".
+
+Indexer:
+mvn exec:java@IndexDriver -Dexec.args="input-directory output-directory"
+
+If you want to run the indexer on the local machine, then the input directory should be the path to the crawled file, but
+not a directory. However, if you upload the jar file to EMR and run the indexer, the input directory should be the directory 
+to your S3 bucket. If you want to run multiple files on local machine, please use MultipleInputDriver instead of IndexDriver.
+
+SearchEngine:
+mvn exec:java@LB -Dexec.args="loadBalancerIP" exampe: "http://localhost".
+mvn exec:java@FrontendWorker -Dexec.args="loadBalancerIP Worker_listen_port" example: "http://localhost 8001".
+
+Before running SearchEngine, make sure that your IP is added in the RDS security group.

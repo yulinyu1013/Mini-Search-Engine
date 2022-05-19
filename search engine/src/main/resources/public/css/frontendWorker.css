@@ -1,0 +1,257 @@
+* {
+    box-sizing: border-box;
+}
+
+div {
+    display: block;
+}
+
+body,
+html,
+input,
+h1 {
+    font-family: sans-serif;
+    font-size  : 14px;
+}
+
+textarea:focus,
+input:focus {
+    outline: none;
+}
+
+.searchBarMain {
+    display        : flex;
+    align-self     : flex-start;
+    justify-content: flex-start;
+    align-content  : center;
+    align-items    : center;
+}
+
+.searchBarMain .searchBar {
+    background   : #fff;
+    border       : 1px solid #dfe1e5;
+    box-shadow   : none;
+    height       : 39px;
+    max-width    : 600px;
+    width        : 100%;
+    border-radius: 24px;
+    z-index      : 3;
+    height       : 44px;
+}
+
+.searchBarMain .searchBar form {
+    display   : flex;
+    align-self: flex-start;
+    width     : 100%;
+}
+
+.searchBarMain .logo {
+    display   : flex;
+    width     : 10%;
+    height    : 10%;
+    align-self: flex-start;
+}
+
+.searchBarMain .logo img {
+    width : 100%;
+    height: auto;
+}
+
+.searchQuery {
+    position        : relative;
+    width           : 90%;
+    position        : relative;
+    background-color: transparent;
+    border          : transparent;
+    margin-left     : 5%;
+    margin-right    : 5%;
+    margin-top      : 1%;
+    padding         : 0;
+    color           : rgba(0, 0, 0, .87);
+    word-wrap       : break-word;
+    display         : flex;
+    justify-content : center;
+    align-items     : center;
+    flex            : 100%;
+    height          : 34px;
+    font-size       : 20px;
+}
+
+.ResutlMain {
+    display        : flex;
+    align-self     : flex-start;
+    justify-content: flex-start;
+    align-content  : flex-start;
+    align-items    : flex-start;
+    flex-direction : row;
+}
+
+.wikiBackground {
+    bottom    : 20px;
+    right     : 20px;
+    width     : 135px;
+    height    : 155px;
+    background: no-repeat url('http://upload.wikimedia.org/wikipedia/commons/3/30/Wikipedia_2.0-new_prototype.png');
+    opacity   : 0.2;
+}
+
+.wikipediaDivision .wikiTitle {
+    text-align   : center;
+    height       : 30px;
+    font         : 50px sans-serif bold;
+    border-radius: 5px 5px 0 0;
+    background   : #fff;
+    margin       : -5px 0 10px 0;
+    line-height  : 30px;
+}
+
+.wikipediaDivision .wikiLogo {
+    width       : 150px;
+    float       : left;
+    margin-right: 20px;
+}
+
+.wikipediaDivision .wikiDesc {
+    float: left;
+    width: 330px;
+}
+
+.wikipediaDivision table .wikiInfoTable {
+    float: left;
+    width: 330px;
+}
+
+.wikipediaDivision .clear {
+    clear: both;
+}
+
+.ResutlMain .DisplayContent {
+    margin-top     : 10px;
+    margin-left    : 10%;
+    display        : flex;
+    align-self     : flex-start;
+    justify-content: flex-start;
+    align-content  : flex-start;
+    align-items    : flex-start;
+    flex-direction : column;
+}
+
+.ResutlMain .DisplayContent .DisplayItem {
+    position       : relative;
+    font-size      : 14px;
+    text-align     : left;
+    display        : flex;
+    align-self     : flex-start;
+    justify-content: flex-start;
+    align-content  : flex-start;
+    align-items    : flex-start;
+    flex-direction : column;
+    font-family    : arial, sans-serif;
+    margin-bottom  : 10px;
+}
+
+.ResutlMain .DisplayContent .DisplayItem .DisplayTitle {
+    line-height: 1.58;
+    font-size  : medium;
+}
+
+.ResutlMain .DisplayContent .DisplayItem .LinkInfo {
+    line-height: 1.58;
+    max-width  : 48em;
+}
+
+.ResutlMain .DisplayContent .DisplayItem .DisplayInfo {
+    line-height: 1.58;
+    max-width  : 48em;
+}
+
+.searchHint {
+    margin-left: 10%;
+    margin-top : 5px;
+}
+
+.pageNumBar {
+    display        : flex;
+    align-self     : center;
+    justify-content: center;
+    align-content  : center;
+    align-items    : center;
+}
+
+.Plugins {
+    width: 45%;
+}
+
+.Plugins .PluginsTab {
+    overflow        : hidden;
+    border          : 1px solid #ccc;
+    border-radius   : 10px;
+    background-color: #f1f1f1;
+}
+
+.Plugins .PluginsTab button {
+    background-color: inherit;
+    float           : left;
+    border          : none;
+    outline         : none;
+    cursor          : pointer;
+    padding         : 14px 16px;
+    border-radius   : 10px;
+    transition      : 0.3s;
+    font-size       : 17px;
+}
+
+.Plugins .PluginsTab button:hover {
+    background-color: #ddd;
+}
+
+.Plugins .PluginsTab button.active {
+    background-color: #ccc;
+}
+
+.tabContent {
+    display   : none;
+    padding   : 6px 12px;
+    border    : 1px solid #ccc;
+    border-top: none;
+}
+
+.Plugins .wikiTab {
+    display        : flex;
+    align-self     : center;
+    justify-content: center;
+    align-content  : center;
+    align-items    : center;
+}
+
+.correctedSearch {
+    margin-left: 10%;
+}
+
+.weatherTab {
+    width: 100%;
+    height: 100%;
+    background     : #1f567c;
+    display        : flex;
+    align-items    : center;
+    justify-content: center;
+    flex-direction : column;
+}
+
+.weatherTab .locationSwitchWrapper {
+    background-color: #1F567C;
+    padding         : 3px;
+}
+
+.weatherTab .weatherWidget {
+    width: 100%;
+    height: 100%;
+}
+
+#switchLocation {
+    border    : none;
+    background: #1F567C;
+    color     : white;
+    font-size : 12px;
+    padding   : 3px;
+}

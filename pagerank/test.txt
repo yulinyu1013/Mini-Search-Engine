@@ -1,0 +1,5 @@
+Google Amazon
+Amazon Google
+Amazon Yahoo
+Yahoo Amazon
+Yahoo Google
